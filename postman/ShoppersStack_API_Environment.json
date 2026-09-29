@@ -1,0 +1,121 @@
+{
+  "id": "shoppersstack-api-env",
+  "name": "ShoppersStack API - Local Template",
+  "values": [
+    {
+      "key": "baseUrl",
+      "value": "https://www.shoppersstack.com",
+      "enabled": true,
+      "type": "default"
+    },
+    {
+      "key": "shopperEmail",
+      "value": "your-email@example.com",
+      "enabled": true,
+      "type": "default"
+    },
+    {
+      "key": "shopperPassword",
+      "value": "CHANGE_ME",
+      "enabled": true,
+      "type": "default"
+    },
+    {
+      "key": "shopperPhone",
+      "value": "9000000000",
+      "enabled": true,
+      "type": "default"
+    },
+    {
+      "key": "bankEmail",
+      "value": "bank-email@example.com",
+      "enabled": true,
+      "type": "default"
+    },
+    {
+      "key": "bankPassword",
+      "value": "CHANGE_ME",
+      "enabled": true,
+      "type": "default"
+    },
+    {
+      "key": "token",
+      "value": "PASTE_TOKEN_HERE",
+      "enabled": true,
+      "type": "default"
+    },
+    {
+      "key": "shopperId",
+      "value": "SHOPPER_ID",
+      "enabled": true,
+      "type": "default"
+    },
+    {
+      "key": "productId",
+      "value": "PRODUCT_ID",
+      "enabled": true,
+      "type": "default"
+    },
+    {
+      "key": "addressId",
+      "value": "ADDRESS_ID",
+      "enabled": true,
+      "type": "default"
+    },
+    {
+      "key": "cartId",
+      "value": "CART_ID",
+      "enabled": true,
+      "type": "default"
+    },
+    {
+      "key": "reviewId",
+      "value": "REVIEW_ID",
+      "enabled": true,
+      "type": "default"
+    },
+    {
+      "key": "cardId",
+      "value": "CARD_ID",
+      "enabled": true,
+      "type": "default"
+    },
+    {
+      "key": "cardNumber",
+      "value": "CARD_NUMBER",
+      "enabled": true,
+      "type": "default"
+    },
+    {
+      "key": "cardCvv",
+      "value": "CVV",
+      "enabled": true,
+      "type": "default"
+    },
+    {
+      "key": "cardPin",
+      "value": "PIN",
+      "enabled": true,
+      "type": "default"
+    },
+    {
+      "key": "bankAccountNumber",
+      "value": "BANK_ACCOUNT_NUMBER",
+      "enabled": true,
+      "type": "default"
+    },
+    {
+      "key": "adminId",
+      "value": "ADMIN_ID",
+      "enabled": true,
+      "type": "default"
+    },
+    {
+      "key": "merchantId",
+      "value": "MERCHANT_ID",
+      "enabled": true,
+      "type": "default"
+    }
+  ],
+  "_postman_variable_scope": "environment"
+}

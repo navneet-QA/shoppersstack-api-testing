@@ -1,0 +1,1730 @@
+{
+  "info": {
+    "name": "ShoppersStack API Testing Collection",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "ShoppersProfile",
+      "item": [
+        {
+          "name": "Register as a Shopper",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"city\": \"Purnia\",\r\n  \"country\": \"India\",\r\n  \"email\": \"{{shopperEmail}}\",\r\n  \"firstName\": \"Navneet\",\r\n  \"gender\": \"MALE\",\r\n  \"lastName\": \"Singh\",\r\n  \"password\": \"{{shopperPassword}}\",\r\n  \"phone\": {{shopperPhone}},\r\n  \"state\": \"Bihar\",\r\n  \"zoneId\": \"ALPHA\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/shopping/shoppers",
+              "protocol": "https",
+              "host": [
+                "www",
+                "shoppersstack",
+                "com"
+              ],
+              "path": [
+                "shopping",
+                "shoppers"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Find shoppers data by shopper id",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "// 1. Check that the response status code is 403",
+                  "pm.test(\"Status code is 403\", function () {",
+                  "    pm.response.to.have.status(403);",
+                  "});",
+                  "",
+                  "// 2. Check that the response time is under 3000ms",
+                  "pm.test(\"Response time is under 3000ms\", function () {",
+                  "    pm.expect(pm.response.responseTime).to.be.below(3000);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "xml"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/shopping/shoppers/{{shopperId}}",
+              "protocol": "https",
+              "host": [
+                "www",
+                "shoppersstack",
+                "com"
+              ],
+              "path": [
+                "shopping",
+                "shoppers",
+                "{{shopperId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Shoppers Login",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "const email = `{{shopperEmail}}`;\r",
+                  "pm.globals.set(\"random\", email);\r",
+                  "\r",
+                  "const phone = `${Math.floor(6000000000 + Math.random() * 4000000000)}`;\r",
+                  "pm.globals.set(\"phone\", phone);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response time is less than 200ms\", function () {\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+                  "});\r",
+                  "\r",
+                  "    var jsonData = pm.response.json();\r",
+                  "    \r",
+                  "pm.globals.set(\"token\", jsonData.data.jwtToken);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"{{shopperEmail}}\", \r\n    \"password\": \"{{shopperPassword}}\", \r\n    \"role\": \"SHOPPER\"\r\n    }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/shopping/users/login",
+              "protocol": "https",
+              "host": [
+                "www",
+                "shoppersstack",
+                "com"
+              ],
+              "path": [
+                "shopping",
+                "users",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update the Shoppers Deatils",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"city\": \"Purnia\",\r\n  \"country\": \"India\",\r\n  \"email\": \"{{shopperEmail}}\",\r\n  \"firstName\": \"Navneet\",\r\n  \"gender\": \"MALE\",\r\n  \"lastName\": \"Singh\",\r\n  \"password\": \"{{shopperPassword}}\",\r\n  \"phone\": {{shopperPhone}},\r\n  \"state\": \"Bihar\",\r\n  \"zoneId\": \"ALPHA\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/shopping/shoppers/{{shopperId}}",
+              "protocol": "https",
+              "host": [
+                "www",
+                "shoppersstack",
+                "com"
+              ],
+              "path": [
+                "shopping",
+                "shoppers",
+                "{{shopperId}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Product view Action",
+      "item": [
+        {
+          "name": "Return all Products",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{Base URl}}/products?zoneId=ALPHA",
+              "host": [
+                "{{Base URl}}"
+              ],
+              "path": [
+                "products"
+              ],
+              "query": [
+                {
+                  "key": "zoneId",
+                  "value": "ALPHA"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Returns all the default products",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{Base URl}}/products/alpha",
+              "host": [
+                "{{Base URl}}"
+              ],
+              "path": [
+                "products",
+                "alpha"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Shoppers Address",
+      "item": [
+        {
+          "name": "Get all the Address",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{Base URl}}/shoppers/{{shopperId}}/address",
+              "host": [
+                "{{Base URl}}"
+              ],
+              "path": [
+                "shoppers",
+                "{{shopperId}}",
+                "address"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Add new Address",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"addressId\": 0,\r\n  \"buildingInfo\": \"string\",\r\n  \"city\": \"Purnia\",\r\n  \"country\": \"India\",\r\n  \"landmark\": \"Kali mandir\",\r\n  \"name\": \"Navneet\",\r\n  \"phone\": \"{{shopperPhone}}\",\r\n  \"pincode\": \"854204\",\r\n  \"state\": \"Bihar\",\r\n  \"streetInfo\": \"string\",\r\n  \"type\": \"string\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{Base URl}}/shoppers/{{shopperId}}/address",
+              "host": [
+                "{{Base URl}}"
+              ],
+              "path": [
+                "shoppers",
+                "{{shopperId}}",
+                "address"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get a particular address by address ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{Base URl}}/shoppers/{{shopperId}}/address/{{addressId}}",
+              "host": [
+                "{{Base URl}}"
+              ],
+              "path": [
+                "shoppers",
+                "{{shopperId}}",
+                "address",
+                "{{addressId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update an added address",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"addressId\": 0,\r\n  \"buildingInfo\": \"string\",\r\n  \"city\": \"Purnia\",\r\n  \"country\": \"India\",\r\n  \"landmark\": \"Durga Madir\",\r\n  \"name\": \"Navneet\",\r\n  \"phone\": \"{{shopperPhone}}\",\r\n  \"pincode\": \"854204\",\r\n  \"state\": \"Bihar\",\r\n  \"streetInfo\": \"string\",\r\n  \"type\": \"string\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{Base URl}}/shoppers/{{shopperId}}/address/{{addressId}}",
+              "host": [
+                "{{Base URl}}"
+              ],
+              "path": [
+                "shoppers",
+                "{{shopperId}}",
+                "address",
+                "{{addressId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete an address",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"addressId\": 0,\r\n  \"buildingInfo\": \"string\",\r\n  \"city\": \"Purnia\",\r\n  \"country\": \"India\",\r\n  \"landmark\": \"Durga Madir\",\r\n  \"name\": \"Navneet\",\r\n  \"phone\": \"{{shopperPhone}}\",\r\n  \"pincode\": \"854204\",\r\n  \"state\": \"Bihar\",\r\n  \"streetInfo\": \"string\",\r\n  \"type\": \"string\"\r\n}"
+            },
+            "url": {
+              "raw": "{{Base URl}}/shoppers/{{shopperId}}/address/{{addressId}}",
+              "host": [
+                "{{Base URl}}"
+              ],
+              "path": [
+                "shoppers",
+                "{{shopperId}}",
+                "address",
+                "{{addressId}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Shoppers Wishlists",
+      "item": [
+        {
+          "name": "Add a product to the Wishlist",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"productId\": {{productId}},\r\n  \"quantity\": 1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{Base URl}}/shoppers/{{shopperId}}/wishlist",
+              "host": [
+                "{{Base URl}}"
+              ],
+              "path": [
+                "shoppers",
+                "{{shopperId}}",
+                "wishlist"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get all the products from wishlist",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{Base URl}}/shoppers/{{shopperId}}/wishlist",
+              "host": [
+                "{{Base URl}}"
+              ],
+              "path": [
+                "shoppers",
+                "{{shopperId}}",
+                "wishlist"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete a product from wishlist",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{Base URl}}/shoppers/{{shopperId}}/wishlist/{{productId}}",
+              "host": [
+                "{{Base URl}}"
+              ],
+              "path": [
+                "shoppers",
+                "{{shopperId}}",
+                "wishlist",
+                "{{productId}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Shopper Cart",
+      "item": [
+        {
+          "name": "Get all the products from the cart",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{Base URl}}/shoppers/{{shopperId}}/carts",
+              "host": [
+                "{{Base URl}}"
+              ],
+              "path": [
+                "shoppers",
+                "{{shopperId}}",
+                "carts"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Add a product to the cart",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"productId\": {{productId}},\r\n  \"quantity\": 2\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{Base URl}}/shoppers/{{shopperId}}/carts",
+              "host": [
+                "{{Base URl}}"
+              ],
+              "path": [
+                "shoppers",
+                "{{shopperId}}",
+                "carts"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update a product in the cart",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"productId\": {{productId}},\r\n  \"quantity\": 4\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{Base URl}}/shoppers/{{shopperId}}/carts/{{cartId}}",
+              "host": [
+                "{{Base URl}}"
+              ],
+              "path": [
+                "shoppers",
+                "{{shopperId}}",
+                "carts",
+                "{{cartId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete a product from the cart",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{Base URl}}/shoppers/{{shopperId}}/carts/{{productId}}",
+              "host": [
+                "{{Base URl}}"
+              ],
+              "path": [
+                "shoppers",
+                "{{shopperId}}",
+                "carts",
+                "{{productId}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Shopper Order",
+      "item": [
+        {
+          "name": "Display order history",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{Base URl}}/shoppers/{{shopperId}}/orders",
+              "host": [
+                "{{Base URl}}"
+              ],
+              "path": [
+                "shoppers",
+                "{{shopperId}}",
+                "orders"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Place order from cart",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": " {\r\n        \"addressId\": {{addressId}},\r\n        \"name\": \"Navneet\",\r\n        \"type\": \"string\",\r\n        \"buildingInfo\": \"string\",\r\n        \"streetInfo\": \"string\",\r\n        \"landmark\": \"Kali mandir\",\r\n        \"city\": \"Purnia\",\r\n        \"state\": \"Bihar\",\r\n        \"country\": \"India\",\r\n        \"pincode\": \"854204\",\r\n        \"phone\": \"{{shopperPhone}}\"\r\n    }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{Base URl}}/shoppers/{{shopperId}}/orders",
+              "host": [
+                "{{Base URl}}"
+              ],
+              "path": [
+                "shoppers",
+                "{{shopperId}}",
+                "orders"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update order status",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{Base URl}}/shoppers/{{shopperId}}/orders",
+              "host": [
+                "{{Base URl}}"
+              ],
+              "path": [
+                "shoppers",
+                "{{shopperId}}",
+                "orders"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Shopper Product Review",
+      "item": [
+        {
+          "name": "Add a review to delivered product",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"dateTime\": \"2026-08-17T05:02:04.836Z\",\r\n  \"description\": \"string\",\r\n  \"heading\": \"string\",\r\n  \"rating\": 0,\r\n  \"shopperId\": {{shopperId}},\r\n  \"shopperName\": \"string\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{Base URl}}/reviews?productId={{productId}}",
+              "host": [
+                "{{Base URl}}"
+              ],
+              "path": [
+                "reviews"
+              ],
+              "query": [
+                {
+                  "key": "productId",
+                  "value": "{{productId}}"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get all the reviews of a product",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"dateTime\": \"2026-08-16T15:10:49.099Z\",\r\n  \"description\": \"string\",\r\n  \"heading\": \"string\",\r\n  \"rating\": 0,\r\n  \"shopperId\": 0,\r\n  \"shopperName\": \"string\"\r\n}"
+            },
+            "url": {
+              "raw": "{{Base URl}}/reviews/{{productId}}",
+              "host": [
+                "{{Base URl}}"
+              ],
+              "path": [
+                "reviews",
+                "{{productId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update an added review",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"dateTime\": \"2026-08-17T05:05:25.977Z\",\r\n  \"description\": \"string\",\r\n  \"heading\": \"string\",\r\n  \"rating\": 0,\r\n  \"shopperId\": 0,\r\n  \"shopperName\": \"string\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{Base URl}}/reviews/{{reviewId}}?productId={{productId}}",
+              "host": [
+                "{{Base URl}}"
+              ],
+              "path": [
+                "reviews",
+                "{{reviewId}}"
+              ],
+              "query": [
+                {
+                  "key": "productId",
+                  "value": "{{productId}}",
+                  "type": "text"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete an added review",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{Base URl}}/reviews/{{reviewId}}?productId={{productId}}",
+              "host": [
+                "{{Base URl}}"
+              ],
+              "path": [
+                "reviews",
+                "{{reviewId}}"
+              ],
+              "query": [
+                {
+                  "key": "productId",
+                  "value": "{{productId}}"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Bank Cards related",
+      "item": [
+        {
+          "name": "Creates the new card for a given bank",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{Base URl}}/cards?bankName=IDHC&cardType=DEBIT&email={{shopperEmail}}&name=navneet&shopperId={{shopperId}}",
+              "host": [
+                "{{Base URl}}"
+              ],
+              "path": [
+                "cards"
+              ],
+              "query": [
+                {
+                  "key": "bankName",
+                  "value": "IDHC",
+                  "type": "text"
+                },
+                {
+                  "key": "cardType",
+                  "value": "DEBIT",
+                  "type": "text"
+                },
+                {
+                  "key": "email",
+                  "value": "{{shopperEmail}}",
+                  "type": "text"
+                },
+                {
+                  "key": "name",
+                  "value": "navneet",
+                  "type": "text"
+                },
+                {
+                  "key": "shopperId",
+                  "value": "{{shopperId}}",
+                  "type": "text"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update card balance",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{Base URl}}/cards?amount=20000&cardNumber={{cardNumber}}",
+              "host": [
+                "{{Base URl}}"
+              ],
+              "path": [
+                "cards"
+              ],
+              "query": [
+                {
+                  "key": "amount",
+                  "value": "20000",
+                  "type": "text"
+                },
+                {
+                  "key": "cardNumber",
+                  "value": "{{cardNumber}}",
+                  "type": "text"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Validates bank card with amount",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"cardId\": {{cardId}},\r\n        \"shopperId\": {{shopperId}},\r\n        \"email\": \"{{shopperEmail}}\",\r\n        \"number\": \"{{cardNumber}}\",\r\n        \"cardType\": \"DEBIT\",\r\n        \"cvv\": {{cardCvv}},\r\n        \"pin\": {{cardPin}},\r\n        \"expiryDate\": \"8/31\",\r\n        \"nameOnCard\": \"navneet\",\r\n        \"bankName\": \"IDHC\",\r\n        \"balance\": 10000.0\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{Base URl}}/cards/transaction?amount=1000",
+              "host": [
+                "{{Base URl}}"
+              ],
+              "path": [
+                "cards",
+                "transaction"
+              ],
+              "query": [
+                {
+                  "key": "amount",
+                  "value": "1000"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Validates bank card",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"cardId\": {{cardId}},\r\n        \"shopperId\": {{shopperId}},\r\n        \"email\": \"{{shopperEmail}}\",\r\n        \"number\": \"{{cardNumber}}\",\r\n        \"cardType\": \"DEBIT\",\r\n        \"cvv\": {{cardCvv}},\r\n        \"pin\": {{cardPin}},\r\n        \"expiryDate\": \"8/31\",\r\n        \"nameOnCard\": \"navneet\",\r\n        \"bankName\": \"IDHC\",\r\n        \"balance\": 77000.0\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{Base URl}}/cards/verify",
+              "host": [
+                "{{Base URl}}"
+              ],
+              "path": [
+                "cards",
+                "verify"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Shopper Profile Cards related",
+      "item": [
+        {
+          "name": "Save the card data",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"cvv\": \"{{cardCvv}}\",\r\n  \"expiryDate\": \"08/31\",\r\n  \"id\": {{cardId}},\r\n  \"nameOnCard\": \"navneet\",\r\n  \"number\": \"{{cardNumber}}\",\r\n  \"type\": \"DEBIT\",\r\n  \"userId\": {{shopperId}}\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{Base URl}}/cards",
+              "host": [
+                "{{Base URl}}"
+              ],
+              "path": [
+                "cards"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete card data based on id",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{Base URl}}/cards/{{cardId}}",
+              "host": [
+                "{{Base URl}}"
+              ],
+              "path": [
+                "cards",
+                "{{cardId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get the card data based on type",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{Base URl}}/cards/{{shopperId}}?type=DEBIT",
+              "host": [
+                "{{Base URl}}"
+              ],
+              "path": [
+                "cards",
+                "{{shopperId}}"
+              ],
+              "query": [
+                {
+                  "key": "type",
+                  "value": "DEBIT",
+                  "type": "text"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Returns all the shoppers cards",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{Base URl}}/shoppers/cards?cardType=DEBIT&shopperId={{shopperId}}",
+              "host": [
+                "{{Base URl}}"
+              ],
+              "path": [
+                "shoppers",
+                "cards"
+              ],
+              "query": [
+                {
+                  "key": "cardType",
+                  "value": "DEBIT",
+                  "type": "text"
+                },
+                {
+                  "key": "shopperId",
+                  "value": "{{shopperId}}",
+                  "type": "text"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Shopper Bank Account related",
+      "item": [
+        {
+          "name": "Get all bank account of shopper",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{Base URl}}/bankaccounts?shopperId={{shopperId}}",
+              "host": [
+                "{{Base URl}}"
+              ],
+              "path": [
+                "bankaccounts"
+              ],
+              "query": [
+                {
+                  "key": "shopperId",
+                  "value": "{{shopperId}}",
+                  "type": "text"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create bank account",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{Base URl}}/bankaccounts?bankName=IDHC&email={{shopperEmail}}&shopperId={{shopperId}}",
+              "host": [
+                "{{Base URl}}"
+              ],
+              "path": [
+                "bankaccounts"
+              ],
+              "query": [
+                {
+                  "key": "bankName",
+                  "value": "IDHC",
+                  "type": "text"
+                },
+                {
+                  "key": "email",
+                  "value": "{{shopperEmail}}",
+                  "type": "text"
+                },
+                {
+                  "key": "shopperId",
+                  "value": "{{shopperId}}",
+                  "type": "text"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update bank account balance",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{Base URl}}/bankaccounts?action=updatebankaccountbalance&amount=100000&number={{bankAccountNumber}}",
+              "host": [
+                "{{Base URl}}"
+              ],
+              "path": [
+                "bankaccounts"
+              ],
+              "query": [
+                {
+                  "key": "action",
+                  "value": "updatebankaccountbalance"
+                },
+                {
+                  "key": "amount",
+                  "value": "100000"
+                },
+                {
+                  "key": "number",
+                  "value": "{{bankAccountNumber}}"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Validates bank account credential",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"email\": \"{{bankEmail}}\",\r\n  \"password\": \"{{bankPassword}}\",\r\n  \"role\": \"ADMIN\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{Base URl}}/bankaccounts/login?bankName=IDHC",
+              "host": [
+                "{{Base URl}}"
+              ],
+              "path": [
+                "bankaccounts",
+                "login"
+              ],
+              "query": [
+                {
+                  "key": "bankName",
+                  "value": "IDHC",
+                  "type": "text"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Shopper Wallet Action",
+      "item": [
+        {
+          "name": "Get all Wallet Transactions",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BaseURl}}/shoppers/{{shopperId}}/wallets",
+              "host": [
+                "{{BaseURl}}"
+              ],
+              "path": [
+                "shoppers",
+                "{{shopperId}}",
+                "wallets"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Shopper Likes Action",
+      "item": [
+        {
+          "name": "Returns all the likes of shopper",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{Base URl}}/shoppers/likes?shopperId={{shopperId}}",
+              "host": [
+                "{{Base URl}}"
+              ],
+              "path": [
+                "shoppers",
+                "likes"
+              ],
+              "query": [
+                {
+                  "key": "shopperId",
+                  "value": "{{shopperId}}",
+                  "type": "text"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete the shoppers like list",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{Base URl}}/shoppers/likes?category=Deletetheshopperlikelist&shopperId={{shopperId}}",
+              "host": [
+                "{{Base URl}}"
+              ],
+              "path": [
+                "shoppers",
+                "likes"
+              ],
+              "query": [
+                {
+                  "key": "category",
+                  "value": "Deletetheshopperlikelist",
+                  "type": "text"
+                },
+                {
+                  "key": "shopperId",
+                  "value": "{{shopperId}}",
+                  "type": "text"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update the shoppers like list",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"additionalProp1\": [\r\n    \"string\"\r\n  ],\r\n  \"additionalProp2\": [\r\n    \"string\"\r\n  ],\r\n  \"additionalProp3\": [\r\n    \"string\"\r\n  ]\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{Base URl}}/shoppers/likes?shopperId={{shopperId}}",
+              "host": [
+                "{{Base URl}}"
+              ],
+              "path": [
+                "shoppers",
+                "likes"
+              ],
+              "query": [
+                {
+                  "key": "shopperId",
+                  "value": "{{shopperId}}",
+                  "type": "text"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Admin Profile related",
+      "item": [
+        {
+          "name": "Register as Admin",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "const email = `kest${Date.now()}@gmail.com`;",
+                  "pm.globals.set(\"random\", email);",
+                  "",
+                  "const phone = `+91${Math.floor(6000000000 + Math.random() * 4000000000)}`;",
+                  "pm.globals.set(\"phone\", phone);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 400\", function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "",
+                  "pm.test(\"Response message is BAD_REQUEST\", function () {",
+                  "    if (pm.response.text() && pm.response.text().trim().length > 0) {",
+                  "        var jsonData = pm.response.json();",
+                  "        pm.expect(jsonData.message).to.eql(\"BAD_REQUEST\");",
+                  "    } else {",
+                  "        pm.expect.fail(\"Response body is empty; expected a BAD_REQUEST message\");",
+                  "    }",
+                  "});",
+                  "",
+                  "pm.test(\"Response contains error details for phone\", function () {",
+                  "    if (pm.response.text() && pm.response.text().trim().length > 0) {",
+                  "        var jsonData = pm.response.json();",
+                  "        pm.expect(JSON.stringify(jsonData)).to.include(\"phone\");",
+                  "    } else {",
+                  "        pm.expect.fail(\"Response body is empty; expected error details for phone\");",
+                  "    }",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"city\":\"Purnia\",\r\n    \"country\":\"India\",\r\n    \"email\":\"{{random}}\",\r\n    \"firstName\":\"navneet\",\r\n    \"gender\":\"MALE\",\r\n    \"lastName\":\"Singh\",\r\n    \"password\":\"{{shopperPassword}}\",\r\n    \"phone\": \"{{phone}}\",\r\n    \"state\":\"Bihar\",\r\n    \"zoneId\":\"ALPHA\"\r\n    }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{Base URl}}/admin",
+              "host": [
+                "{{Base URl}}"
+              ],
+              "path": [
+                "admin"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Admin Details by Id",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{Base URl}}/admin/{{adminId}}",
+              "host": [
+                "{{Base URl}}"
+              ],
+              "path": [
+                "admin",
+                "{{adminId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update admin details by Id",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Admin Action related",
+      "item": [
+        {
+          "name": "Returns all the merchant data of specific zone",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        },
+        {
+          "name": "Saves merchant status to Blocked to Approved and visa-versa",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{Base URl}}/merchants/{{merchantId}}/status?status=blocked",
+              "host": [
+                "{{Base URl}}"
+              ],
+              "path": [
+                "merchants",
+                "{{merchantId}}",
+                "status"
+              ],
+              "query": [
+                {
+                  "key": "status",
+                  "value": "blocked"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://www.shoppersstack.com",
+      "type": "string",
+      "description": "Base URL"
+    },
+    {
+      "key": "shopperEmail",
+      "value": "your-email@example.com",
+      "type": "string",
+      "description": "Shopper login email"
+    },
+    {
+      "key": "shopperPassword",
+      "value": "CHANGE_ME",
+      "type": "string",
+      "description": "Shopper password"
+    },
+    {
+      "key": "shopperPhone",
+      "value": "9000000000",
+      "type": "string",
+      "description": "Shopper phone"
+    },
+    {
+      "key": "bankEmail",
+      "value": "bank-email@example.com",
+      "type": "string",
+      "description": "Bank email"
+    },
+    {
+      "key": "bankPassword",
+      "value": "CHANGE_ME",
+      "type": "string",
+      "description": "Bank password"
+    },
+    {
+      "key": "token",
+      "value": "PASTE_TOKEN_HERE",
+      "type": "string",
+      "description": "Bearer token from login"
+    },
+    {
+      "key": "shopperId",
+      "value": "SHOPPER_ID",
+      "type": "string",
+      "description": "Shopper ID"
+    },
+    {
+      "key": "productId",
+      "value": "PRODUCT_ID",
+      "type": "string",
+      "description": "Product ID"
+    },
+    {
+      "key": "addressId",
+      "value": "ADDRESS_ID",
+      "type": "string",
+      "description": "Address ID"
+    },
+    {
+      "key": "cartId",
+      "value": "CART_ID",
+      "type": "string",
+      "description": "Cart ID"
+    },
+    {
+      "key": "reviewId",
+      "value": "REVIEW_ID",
+      "type": "string",
+      "description": "Review ID"
+    },
+    {
+      "key": "cardId",
+      "value": "CARD_ID",
+      "type": "string",
+      "description": "Card ID"
+    },
+    {
+      "key": "cardNumber",
+      "value": "CARD_NUMBER",
+      "type": "string",
+      "description": "Test card number"
+    },
+    {
+      "key": "cardCvv",
+      "value": "CVV",
+      "type": "string",
+      "description": "Test CVV"
+    },
+    {
+      "key": "cardPin",
+      "value": "PIN",
+      "type": "string",
+      "description": "Test PIN"
+    },
+    {
+      "key": "bankAccountNumber",
+      "value": "BANK_ACCOUNT_NUMBER",
+      "type": "string",
+      "description": "Test bank account number"
+    },
+    {
+      "key": "adminId",
+      "value": "ADMIN_ID",
+      "type": "string",
+      "description": "Admin ID"
+    },
+    {
+      "key": "merchantId",
+      "value": "MERCHANT_ID",
+      "type": "string",
+      "description": "Merchant ID"
+    }
+  ]
+}

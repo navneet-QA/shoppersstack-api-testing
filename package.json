@@ -1,0 +1,10 @@
+{
+  "name": "shoppersstack-api-testing-postman",
+  "private": true,
+  "scripts": {
+    "test": "newman run postman/ShoppersStack_API_Collection.json -e postman/ShoppersStack_API_Environment.json"
+  },
+  "devDependencies": {
+    "newman": "^6.2.1"
+  }
+}
